@@ -1,0 +1,6 @@
+SFO San_Francisco
+LAX Los_Angeles
+SEA Seattle
+DEN Denver
+JFK New_York
+BOS Boston
