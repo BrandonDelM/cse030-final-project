@@ -12,6 +12,8 @@ struct FlightResults {
     int stops;
 };
 
+
+
 void loadAirports(Graph &g, const std::string &filename);
 void loadRoutes(Graph &g, const std::string &filename);
 
