@@ -10,8 +10,8 @@ using namespace std;
 int main() {
     Graph g;
 
-    loadAirports(g, "final/data/airports.txt");
-    loadRoutes(g, "final/data/routes.txt");
+    loadAirports(g, "data/airports.txt");
+    loadRoutes(g, "data/routes.txt");
 
     std::string start, dest;
     int pref;
