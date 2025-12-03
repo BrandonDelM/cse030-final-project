@@ -12,13 +12,7 @@ struct FlightResults {
     int stops;
 };
 
-struct RouteRecord {
-    std::string src;
-    std::string dest;
-    double price;
-    double time;
-    std::string routes;
-};
+
 
 void loadAirports(Graph &g, const std::string &filename);
 void loadRoutes(Graph &g, const std::string &filename);
