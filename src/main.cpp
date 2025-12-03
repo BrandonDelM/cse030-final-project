@@ -4,6 +4,8 @@
 #include <iostream>
 
 using namespace std;
+/////USE THIS TO TEST ./bin/flightplanner
+
 
 int main() {
     Graph g;
@@ -30,7 +32,7 @@ int main() {
     FlightResults result = computePath(g, start, dest, pref);
     if (result.path.empty()) {
         std::cout << "No routes found";
-        return 0
+        return 0;
     }
 
     std::cout << "--Flight--Plan--\n";

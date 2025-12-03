@@ -103,6 +103,10 @@ FlightResults computePath(Graph &g, const std::string &start,
 
     Waypoint *resultNode = nullptr;
 
+    std::cout << "\n debug " << g.vertices.size() << "\n";
+    for (int i = 0; i < g.vertices.size(); i++)
+        std::cout << " - " << g.vertices[i]->data << "\n";
+    std::cout << "\n debug loaded routes: " << routes.size() << "\n";
     if (preference == 3) {
         resultNode = g.bfs(sV, dV);
 
