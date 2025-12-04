@@ -1,11 +1,8 @@
 #include "FlightPlanner.h"
 #include "Graph.h"
 
-#include <algorithm>
 #include <fstream>
 #include <iostream>
-#include <queue>
-#include <sstream>
 #include <string>
 
 struct Route {
@@ -82,7 +79,7 @@ static void buildWeightedGraph(Graph &g, int pref) {
     }
 }
 
-static std::vector<std::string> buildPath(Waypoint *end) {
+static ArrayList<std::string> buildPath(Waypoint *end) {
 
     ArrayList<std::string> reversed;
 

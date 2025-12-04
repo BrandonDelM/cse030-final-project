@@ -6,7 +6,6 @@
 using namespace std;
 /////USE THIS TO TEST ./bin/flightplanner
 
-
 int main() {
     Graph g;
 
@@ -30,15 +29,15 @@ int main() {
     std::cin >> pref;
 
     FlightResults result = computePath(g, start, dest, pref);
-    if (result.path.empty()) {
+    if (result.path.size() == 0) {
         std::cout << "No routes found";
         return 0;
     }
 
     std::cout << "--Flight--Plan--\n";
     std::cout << "Path: ";
-    for (auto &p : result.path)
-        std::cout << p << " ";
+    for (int i = 0; i < result.path.size(); i++)
+        std::cout << result.path[i] << " ";
     std::cout << "\n";
 
     std::cout << "Total Price: " << result.totalPrice << "\n";

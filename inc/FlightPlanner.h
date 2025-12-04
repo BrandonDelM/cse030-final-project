@@ -2,17 +2,13 @@
 #define FLIGHTPLANNER_H
 
 #include "Graph.h"
-#include <string>
-#include <vector>
 
 struct FlightResults {
-    std::vector<std::string> path;
+    ArrayList<std::string> path;
     double totalPrice;
     double totalTime;
     int stops;
 };
-
-
 
 void loadAirports(Graph &g, const std::string &filename);
 void loadRoutes(Graph &g, const std::string &filename);
