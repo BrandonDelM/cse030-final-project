@@ -7,8 +7,7 @@
 #include <queue>
 #include <sstream>
 #include <string>
-#include <unordered_map>
-#include <unordered_set>
+
 
 struct Route {
     std::string src;
@@ -17,7 +16,7 @@ struct Route {
     int time;
 };
 
-static std::vector<Route> routes;
+static ArrayList<Route>;
 
 void loadAirports(Graph &g, const std::string &filename) {
     std::ifstream file(filename);
@@ -36,7 +35,12 @@ void loadRoutes(Graph &g, const std::string &filename) {
     int price, time;
 
     while (file >> src >> dest >> price >> time) {
-        routes.push_back({src, dest, price, time});
+        Route r;
+        r.src = src;
+        r.dest = dest;
+        r.price = price;
+        r.time = time;
+        routes.append(r);
     }
 }
 
@@ -54,15 +58,15 @@ static Vertex *findVertex(Graph &g, const std::string &code) {
 
 static void buildWeightedGraph(Graph &g, int pref) {
     for (int i = 0; i < g.vertices.size(); i++) {
-        g.vertices[i]->edgeList = ArrayList<Edge *>();
+        g.vertices[i]->edgeList.clear();
     }
+    for (int i = 0; i < routes.size(); i++) {
+        Route &r = routes[i];
 
-    for (auto &r : routes) {
         Vertex *a = findVertex(g, r.src);
         Vertex *b = findVertex(g, r.dest);
 
-        if (!a || !b)
-            continue;
+        if (!a || !b) continue;
 
         int w = 1;
         if (pref == 1)
