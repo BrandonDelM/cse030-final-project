@@ -94,7 +94,8 @@ FlightResults computePath(Graph &g, const std::string &start,
     out.totalTime = 0;
 
     buildWeightedGraph(g, preference);
-
+    ///sV (stariting vecotor)
+    ///dV (destination vector)
     Vertex *sV = findVertex(g, start);
     Vertex *dV = findVertex(g, dest);
 
