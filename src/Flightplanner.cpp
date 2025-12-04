@@ -8,7 +8,6 @@
 #include <sstream>
 #include <string>
 
-
 struct Route {
     std::string src;
     std::string dest;
@@ -16,7 +15,7 @@ struct Route {
     int time;
 };
 
-static ArrayList<Route>;
+static ArrayList<Route> routes;
 
 void loadAirports(Graph &g, const std::string &filename) {
     std::ifstream file(filename);
@@ -28,7 +27,9 @@ void loadAirports(Graph &g, const std::string &filename) {
 }
 
 void loadRoutes(Graph &g, const std::string &filename) {
-    routes.clear();
+    while (routes.size() > 0) {
+        routes.removeLast();
+    }
     std::ifstream file(filename);
 
     std::string src, dest;
@@ -58,7 +59,9 @@ static Vertex *findVertex(Graph &g, const std::string &code) {
 
 static void buildWeightedGraph(Graph &g, int pref) {
     for (int i = 0; i < g.vertices.size(); i++) {
-        g.vertices[i]->edgeList.clear();
+        while (g.vertices[i]->edgeList.size() > 0) {
+            g.vertices[i]->edgeList.removeLast();
+        }
     }
     for (int i = 0; i < routes.size(); i++) {
         Route &r = routes[i];
@@ -66,7 +69,8 @@ static void buildWeightedGraph(Graph &g, int pref) {
         Vertex *a = findVertex(g, r.src);
         Vertex *b = findVertex(g, r.dest);
 
-        if (!a || !b) continue;
+        if (!a || !b)
+            continue;
 
         int w = 1;
         if (pref == 1)
@@ -79,14 +83,18 @@ static void buildWeightedGraph(Graph &g, int pref) {
 }
 
 static std::vector<std::string> buildPath(Waypoint *end) {
-    std::vector<std::string> path;
+
+    ArrayList<std::string> reversed;
 
     while (end != nullptr) {
-        path.push_back(end->vertex->data);
+        reversed.append(end->vertex->data);
         end = end->parent;
     }
+    ArrayList<std::string> path;
+    for (int i = reversed.size() - 1; i >= 0; i--) {
+        path.append(reversed[i]);
+    }
 
-    std::reverse(path.begin(), path.end());
     return path;
 }
 
@@ -98,8 +106,8 @@ FlightResults computePath(Graph &g, const std::string &start,
     out.totalTime = 0;
 
     buildWeightedGraph(g, preference);
-    ///sV (stariting vecotor)
-    ///dV (destination vector)
+    /// sV (stariting vecotor)
+    /// dV (destination vector)
     Vertex *sV = findVertex(g, start);
     Vertex *dV = findVertex(g, dest);
 
@@ -129,7 +137,8 @@ FlightResults computePath(Graph &g, const std::string &start,
         std::string a = out.path[i];
         std::string b = out.path[i + 1];
 
-        for (auto &r : routes) {
+        for (int j = 0; j < routes.size(); j++) {
+            Route &r = routes[j];
             if (r.src == a && r.dest == b) {
                 out.totalPrice += r.price;
                 out.totalTime += r.time;
