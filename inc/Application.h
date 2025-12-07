@@ -23,6 +23,7 @@ class Application : public bobcat::Application_ {
 
     public:
     Application();
+    void handleClick(bobcat::Widget* sender);
 
 };
 #endif

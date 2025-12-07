@@ -32,5 +32,36 @@ Application::Application(){
     path_scroll->align(FL_ALIGN_TOP_LEFT);
     path_scroll->box(FL_THIN_UP_BOX);
 
+    ON_CLICK(findpath_button, Application::handleClick);
+
     window->show();
+}
+
+void Application::handleClick(bobcat::Widget *sender) {
+    Graph g;
+
+    loadAirports(g, "data/airports.txt");
+    loadRoutes(g, "data/routes.txt");
+
+    std::string start = from_dropdown->text();
+    std::string dest = to_dropdown->text();
+
+    path_scroll->clear();
+    stats_textbox->label("");
+
+    int pref = preference_dropdown->value()+1;
+    FlightResults result = computePath(g, start, dest, pref);
+    if (result.path.size() != 0) {
+        for (int i = 0; i < result.path.size(); i++) {
+            path_scroll->add(new TextBox(40, 225+(40*i), 300, 25, result.path[i]));
+        }
+        std::string statistics = "Total Price: " + to_string(round(result.totalPrice)) + "\n";
+        statistics += "Total Time: " + to_string(round(result.totalTime)) + "\n";
+        statistics += "Total Stops: " + to_string(result.stops) + "\n";
+        stats_textbox->label(statistics);
+    }
+    else {
+        path_scroll->add(new TextBox(40, 225, 300, 25, "No path found"));
+    }
+    window->redraw();
 }
