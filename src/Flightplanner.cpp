@@ -1,5 +1,6 @@
 #include "FlightPlanner.h"
 #include "Graph.h"
+#include <ArrayList.h>
 
 #include <fstream>
 #include <iostream>
@@ -144,4 +145,16 @@ FlightResults computePath(Graph &g, const std::string &start,
     }
 
     return out;
+}
+
+//Adding code that would just return all destinations in a list
+ArrayList<std::string> add_Airports(const std::string &filename) {
+    ArrayList<std::string> airport_array;
+    std::ifstream file(filename);
+    std::string airport;
+    std::string full_name;
+    while (file >> airport >> full_name) {
+        airport_array.append(airport);
+    }
+    return airport_array;
 }
