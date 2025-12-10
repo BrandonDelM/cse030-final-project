@@ -1,6 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include "GraphVisCanvas.h"
 #include <bobcat_ui/bobcat_ui.h>
 #include <bobcat_ui/window.h>
 #include <bobcat_ui/dropdown.h>
@@ -20,6 +21,7 @@ class Application : public bobcat::Application_ {
     Button* findpath_button; //Run the code to find the route
     Fl_Scroll* path_scroll; //Shows the route
     TextBox* stats_textbox; //Statistics for the route
+    GraphVisCanvas* canvas;
 
     public:
     Application();

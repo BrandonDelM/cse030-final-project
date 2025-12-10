@@ -5,18 +5,26 @@
 #include <bobcat_ui/window.h>
 #include <ArrayList.h>
 #include "FlightPlanner.h"
+#include "GraphVisCanvas.h"
+#include "GraphVisualization.h"
 
 using namespace bobcat;
 using namespace std;
 
 Application::Application(){
-    window = new Window(100,100, 400, 400,"Flight Tracker");
+    Graph g;
+
+    loadAirports(g, "data/airports.txt");
+    loadRoutes(g, "data/routes.txt");
+    Graph_Visualization graph_vis = Graph_Visualization(&g);
+    window = new Window(100,100, 400, 600,"Flight Tracker");
     from_dropdown = new Dropdown(50, 25, 100, 25, "From");
     to_dropdown = new Dropdown(250, 25, 100, 25, "To");
     arrow_text = new TextBox(175, 25, 50, 25, "------->");
     preference_dropdown = new Dropdown(50, 75, 300, 25, "Path Preference");
     findpath_button = new Button(50, 125, 300, 25, "Find Path");
     stats_textbox = new TextBox(50, 150, 300, 50, "help");
+    canvas = new GraphVisCanvas(0,375,400,225,&graph_vis);
     path_scroll = new Fl_Scroll(50, 225, 300, 150, "Path Route");
 
     ArrayList<std::string> airports = add_Airports("data/airports.txt");
@@ -34,6 +42,7 @@ Application::Application(){
 
     ON_CLICK(findpath_button, Application::handleClick);
 
+    
     window->show();
 }
 
