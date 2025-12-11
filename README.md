@@ -9,14 +9,15 @@ The airports and routes are represented as a graph, where the vertices are airpo
 
 A user should be able to select a starting point and a destination point, as well as a preference between 3 options. These are:
 
-Cheapest price
-Shortest travel time
-Least number of stops
-For simplicity we can assume that layovers take 0 units of time. The output we expect is a flight itinerary from the starting airport to the destination airport, with all the stops along the way, and the total cost of the flight, the time taken, and (trivially) the number of stops.
+Cheapest price (Done) 
+Shortest travel time (Done)
+Least number of stops (Done)
+For simplicity we can assume that layovers take 0 units of time. 
+The output we expect is a flight itinerary from the starting airport to the destination airport, with all the stops along the way, and the total cost of the flight, the time taken, and (trivially) the number of stops. (Done)
 
-There should be examples in the data where a direct flight (or flight with fewer stops) is more expensive than a sequence of alternative flights. Based on the user preference, the program should output the correct route.
+There should be examples in the data where a direct flight (or flight with fewer stops) is more expensive than a sequence of alternative flights. Based on the user preference, the program should output the correct route. 
 # 2. Requirements
-You can implement this as a Bobcat UI application or as a command line application.
+You can implement this as a Bobcat UI application or as a command line application. Implemented as CLI
 You must use the Graph data structure included in the support files of this project, which is the one presented in class.
 The graph data should be loaded from text files that are easily modifiable.
 You need to work in teams of 2 - 5 people.
