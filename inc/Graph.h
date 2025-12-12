@@ -16,6 +16,8 @@ struct Vertex {
     std::string data;
     ArrayList<Edge *> edgeList;
 
+    ~Vertex();
+
     Vertex(std::string data) { this->data = data; }
 };
 
@@ -37,6 +39,12 @@ struct Edge {
     }
 };
 
+inline Vertex::~Vertex() {
+    for (int i = 0; i < edgeList.size(); i++) {
+        delete edgeList[i];
+    }
+}
+
 inline std::ostream &operator<<(std::ostream &os, Edge *e) {
     os << "(" << e->from << ", " << e->to << ") - " << e->weight;
 
@@ -55,6 +63,12 @@ struct Waypoint {
         vertex = v;
         weight = 0;
         partialCost = 0;
+    }
+
+    ~Waypoint() {
+        for (int i = 0; i < children.size(); i++) {
+            delete children[i];
+        }
     }
 
     void expand() {
@@ -81,6 +95,12 @@ inline std::ostream &operator<<(std::ostream &os, Waypoint *wp) {
 
 struct Graph {
     ArrayList<Vertex *> vertices;
+
+    ~Graph() {
+        for (int i = 0; i < vertices.size(); i++) {
+            delete vertices[i];
+        }
+    }
 
     void addVertex(Vertex *v) { vertices.append(v); }
 
@@ -149,6 +169,8 @@ struct Graph {
             }
             std::cout << std::endl;
         }
+
+        delete result;
 
         return nullptr;
     }
@@ -239,7 +261,6 @@ struct Graph {
                     std::cout << "Adding " << result->children[i]->vertex->data
                               << std::endl;
                     frontier.append(result->children[i]);
-
 
                     // Sort the frontier....
                     int j = frontier.size() - 1;
