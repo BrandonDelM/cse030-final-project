@@ -4,6 +4,41 @@
 #include <cmath>
 #include <iostream>
 #include <math.h>
+#include <GL/gl.h>
+#include <bobcat_ui/canvas.h>
+
+// Visual portion of drawing the graph: Vertices & Edges
+void Graph_Visualization::drawVertex(int x, int y) {
+    glColor3f(0, 0, 0);
+    int radius = 7;
+    float inc = M_PI / 32;
+    glBegin(GL_POLYGON);
+        for (float theta = 0; theta <= 2 * M_PI; theta += inc){
+            glVertex2d(x + cos(theta) * radius, y + sin(theta) * radius);
+        }
+    glEnd();
+}
+void Graph_Visualization::drawEdge(int x1, int y1, int x2, int y2) {
+    glColor3f(0,0,0);
+    // Adjusting edge endpoints to only touch vertex circle's edge
+    float radius = 7;
+    float dx = x2 - x1;
+    float dy = y2 - y1;
+    float len = sqrt(dx*dx + dy*dy);
+
+    float nx = dx / len;
+    float ny = dy / len;
+
+    float x1_adj = x1 - nx * radius;
+    float y1_adj = y1 - ny * radius;
+    float x2_adj = x2 - nx * radius;
+    float y2_adj = y2 - ny * radius;
+
+    glBegin(GL_LINES);
+        glVertex2f(x1_adj, y1_adj);
+        glVertex2f(x2_adj, y2_adj);
+    glEnd();
+}
 
 Graph_Visualization::Graph_Visualization(Graph *const input_graph) {
     g = input_graph;
