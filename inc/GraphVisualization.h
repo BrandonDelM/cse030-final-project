@@ -15,8 +15,6 @@ class Graph_Visualization {
     static constexpr float ATTRACTION_FORCE = 2;
     static constexpr float LOGRITHMIC_FALLOFF = 25;
     const Graph *g;
-    void drawVertex(int x, int y);
-    void drawEdge(int x1, int y1, int x2, int y2);
     void init_nodes();
     void iteration();
     float DistanceBetweenPointsHelper(const float x1, const float y1,

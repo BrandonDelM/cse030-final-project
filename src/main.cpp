@@ -65,31 +65,41 @@ GraphVisCanvas::GraphVisCanvas(int x, int y, int w, int h,
     viewpoint_y = 0;
 }
 void GraphVisCanvas::render() {
-    int nodes = graph_visualization_instance->nodes.size();
-    for (int i = 0; i < nodes; i++) {
-        int x = graph_visualization_instance->nodes[i]->x;
-        int y = graph_visualization_instance->nodes[i]->y;
-        glBegin(GL_POLYGON);
-        float inc = 2 * M_PI / 60;
-        for (float theta = 0; theta <= 2 * M_PI; theta += inc) {
-            glVertex2f(viewpoint_x + x + 2 * cos(theta),
-                       viewpoint_y + y + 2 * sin(theta));
-            //std::cout << graph_visualization_instance->nodes[i]-> x+viewpoint_x  << " ";
-            //std::cout << graph_visualization_instance->nodes[i]-> y+viewpoint_y  << std::endl;
-        }
-        glEnd();
-        // for (int j=0;
-        // j<graph_visualization_instance->nodes[i]->node->edgeList.size(); j++)
-        // {
-        //     for(int k=0; k<graph_visualization_instance->nodes.size(); k++){
-        //         if(graph_visualization_instance->nodes[k]->node==graph_visualization_instance->nodes[i]->node->edgeList[j]->to){
-        //             glBegin(GL_LINES);
-        //             glVertex2f(viewpoint_x+x, viewpoint_y+y);
-        //             glVertex2f(viewpoint_x+graph_visualization_instance->nodes[k]->x,
-        //             viewpoint_y+graph_visualization_instance->nodes[k]->y);
-        //             glEnd();
-        //         }
-        //     }
-        // }
+    int nodes_number = graph_visualization_instance->nodes.size();
+    for (int i = 0; i < nodes_number; i++) {
+        this->drawVertex(graph_visualization_instance->nodes[i]->x,
+                         graph_visualization_instance->nodes[i]->y);
     }
+}
+// Visual portion of drawing the graph: Vertices & Edges
+void GraphVisCanvas::drawVertex(int x, int y) {
+    glColor3f(0, 0, 0);
+    int radius = 7;
+    float inc = M_PI / 32;
+    glBegin(GL_POLYGON);
+    for (float theta = 0; theta <= 2 * M_PI; theta += inc) {
+        glVertex2d(x + cos(theta) * radius, y + sin(theta) * radius);
+    }
+    glEnd();
+}
+void GraphVisCanvas::drawEdge(int x1, int y1, int x2, int y2) {
+    glColor3f(0, 0, 0);
+    // Adjusting edge endpoints to only touch vertex circle's edge
+    float radius = 7;
+    float dx = x2 - x1;
+    float dy = y2 - y1;
+    float len = sqrt(dx * dx + dy * dy);
+
+    float nx = dx / len;
+    float ny = dy / len;
+
+    float x1_adj = x1 - nx * radius;
+    float y1_adj = y1 - ny * radius;
+    float x2_adj = x2 - nx * radius;
+    float y2_adj = y2 - ny * radius;
+
+    glBegin(GL_LINES);
+    glVertex2f(x1_adj, y1_adj);
+    glVertex2f(x2_adj, y2_adj);
+    glEnd();
 }
