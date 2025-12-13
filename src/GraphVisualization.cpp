@@ -11,10 +11,7 @@ Graph_Visualization::Graph_Visualization(Graph *const input_graph) {
     g = input_graph;
     init_nodes();
     for (int i = 0; i < 15; i++) {
-        // iteration();
-    }
-    for (int i =0; i<nodes.size(); i++) {
-        
+        iteration();
     }
 }
 void Graph_Visualization::init_nodes() {
