@@ -69,6 +69,15 @@ void GraphVisCanvas::render() {
     for (int i = 0; i < nodes_number; i++) {
         this->drawVertex(graph_visualization_instance->nodes[i]->x,
                          graph_visualization_instance->nodes[i]->y);
+
+        /*for (int j=0;j<graph_visualization_instance->nodes[i]->node->edgeList.size(); j++)
+        {
+            for(int k=0; k<graph_visualization_instance->nodes.size(); k++){
+                if(graph_visualization_instance->nodes[k]->node==graph_visualization_instance->nodes[i]->node->edgeList[j]->to){
+                    drawEdge(graph_visualization_instance->nodes[i]->x,graph_visualization_instance->nodes[i]->y,graph_visualization_instance->nodes[k]->x,graph_visualization_instance->nodes[k]->y);
+                }
+            }
+        }*/
     }
 }
 // Visual portion of drawing the graph: Vertices & Edges
