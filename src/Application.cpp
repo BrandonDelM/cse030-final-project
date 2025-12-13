@@ -1,22 +1,27 @@
 #include "Application.h"
+#include "FlightPlanner.h"
+#include <ArrayList.h>
 #include <FL/Enumerations.H>
+#include <bobcat_ui/bobcat_ui.h>
 #include <bobcat_ui/dropdown.h>
 #include <bobcat_ui/textbox.h>
 #include <bobcat_ui/window.h>
-#include <ArrayList.h>
-#include "FlightPlanner.h"
 
 using namespace bobcat;
 using namespace std;
 
-Application::Application(){
-    window = new Window(100,100, 400, 400,"Flight Tracker");
+std::string intToPrice(int price) { return "$" + roundFloat(price); }
+
+std::string intToTime(int time) { return roundFloat(time, 0) + " Hrs"; }
+
+Application::Application() {
+    window = new Window(100, 100, 400, 400, "Flight Tracker");
     from_dropdown = new Dropdown(50, 25, 100, 25, "From");
     to_dropdown = new Dropdown(250, 25, 100, 25, "To");
     arrow_text = new TextBox(175, 25, 50, 25, "------->");
     preference_dropdown = new Dropdown(50, 75, 300, 25, "Path Preference");
     findpath_button = new Button(50, 125, 300, 25, "Find Path");
-    stats_textbox = new TextBox(50, 150, 300, 50, "help");
+    stats_textbox = new TextBox(50, 150, 300, 50, "");
     path_scroll = new Fl_Scroll(50, 225, 300, 150, "Path Route");
 
     ArrayList<std::string> airports = add_Airports("data/airports.txt");
@@ -49,18 +54,19 @@ void Application::handleClick(bobcat::Widget *sender) {
     path_scroll->clear();
     stats_textbox->label("");
 
-    int pref = preference_dropdown->value()+1;
+    int pref = preference_dropdown->value() + 1;
     FlightResults result = computePath(g, start, dest, pref);
     if (result.path.size() != 0) {
         for (int i = 0; i < result.path.size(); i++) {
-            path_scroll->add(new TextBox(40, 225+(40*i), 300, 25, result.path[i]));
+            path_scroll->add(
+                new TextBox(40, 225 + (40 * i), 300, 25, result.path[i]));
         }
-        std::string statistics = "Total Price: " + to_string(round(result.totalPrice)) + "\n";
-        statistics += "Total Time: " + to_string(round(result.totalTime)) + "\n";
+        std::string statistics =
+            "Total Price: " + intToPrice(result.totalPrice) + "\n";
+        statistics += "Total Time: " + intToTime(result.totalTime) + "\n";
         statistics += "Total Stops: " + to_string(result.stops) + "\n";
         stats_textbox->label(statistics);
-    }
-    else {
+    } else {
         path_scroll->add(new TextBox(40, 225, 300, 25, "No path found"));
     }
     window->redraw();
